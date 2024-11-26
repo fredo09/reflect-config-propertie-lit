@@ -5,28 +5,34 @@ export class SlotComponentLit extends LitElement {
     :host {
             display: block;
         }
-        div {
+        main {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .content {
             display: none;
         }
-        span {
-          display: block;
-          background-color: cadetblue;
-          padding: 0.5rem;
-          color: white;
-          font-weight: 100;
-          border-radius: 5px;
+        .trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        p:hover {
+        .trigger div {
+            flex-grow: 1;
+        }
+        svg {
+            width: 52px;
+            height: 52px;
+            transition: transform 0.3s linear;
+        }
+        svg:hover {
           cursor: pointer;
-          text-decoration: underline;
         }
-
-        :host([is-show]) div {
+        :host([is-show]) .content {
             display: block;
-            transition: ease-in-out ;
-            border: 2px solid aqua;
-            border-radius: 5px;
-            padding: 0.5rem;
+        }
+        :host([is-show]) svg {
+            transform: rotate(90deg);
         }
   `;
 
@@ -54,18 +60,25 @@ export class SlotComponentLit extends LitElement {
     this.isShow = !this.isShow;
   }
 
-
   /**
    * @description render template html for component
    * @returns html
    */
   render() {
     return html`
-      <p @click="${this._change}">Mostrar / Ocultar</p>
-      ${ this.isShow 
-        ? html`<div>Este contenido se ve algunas veces si y otras no...</div>`
-        : html`<span class="show-div"> Has Click para mostrar el contenido!!</span>`
-      }
+      <main>
+            <section class="trigger" @click=${this._change}>
+                <div>
+                    <slot name="trigger"></slot>
+                </div>
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/></svg>
+                </span>
+            </section>
+            <section class="content">
+                <slot name="content"></slot>
+            </section>
+        </main>
     `;
   }
 }

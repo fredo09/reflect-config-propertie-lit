@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <style>
+    body {
+      background: #fafafa;
+    }
+  </style>
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit';
+    import '../slot-component-lit.js';
+
+    const header = 'Hello owc World!';
+    render(
+      html`
+        <slot-component-lit>
+          <h2 slot="trigger">Qué es Lit</h2>
+          <div slot="content">
+              <p>Es una librería ligera para el desarrollo de custom elements basados en el estándar de Web Components, con alto rendimiento y una experiencia de desarrollo avanzada.</p>
+          </div>
+        </slot-component-lit>
+      `,
+      document.querySelector('#demo')
+    );
+  </script>
+</body>
+</html>
